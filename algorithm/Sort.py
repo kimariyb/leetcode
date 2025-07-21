@@ -10,6 +10,8 @@
 7. 计数排序：统计每个元素出现的次数，按顺序输出  (不考虑)
 8. 桶排序：将元素分到有限数量的桶中，对每个桶单独排序
 9. 基数排序：按照元素的位数进行排序
+
+这些所有的算法均为升序排列：如果需要得到降序可以通过 [::-1] 操作符实现。
 """
 import heapq
 
@@ -296,9 +298,58 @@ def RadixSort(arr: List[int]) -> List[int]:
 
     Parameters
     ----------
-    arr
+    arr : List[int]
+        待排序整数列表
 
     Returns
     -------
-
+    List[int]
+        排序后的整数列表（返回新列表，不改变原列表）
     """
+    n = len(str(max(arr)))
+
+    # 从最低位（个位）开始，逐位遍历每一位
+    for i in range(n):
+        # 定义长度为 10 的桶数组 buckets，每个桶分别代表 0 ~ 9 中的 1 个数字。
+        buckets = [[] for _ in range(10)]
+        # 遍历数组元素，按照每个元素当前位上的数字，将元素放入对应数字的桶中。
+        for num in arr:
+            buckets[(num // (10 ** i)) % 10].append(num)
+
+        arr.clear()
+        # 按照桶的顺序依次取出对应元素，重新加入到原始数组中。
+        arr = [num for bucket in buckets for num in bucket]
+
+    return arr
+
+
+if __name__ == '__main__':
+    arr = [3, 1, 9, 2, 5, 7, 6]
+
+    # 分别测试不同的方法，同时输出结果
+    print("原始数组:", arr)
+    print("\n排序结果:")
+
+    # 测试冒泡排序
+    print(f"冒泡排序: {BubbleSort(arr.copy())}")
+
+    # 测试选择排序
+    print(f"选择排序: {SelectionSort(arr.copy())}")
+
+    # 测试插入排序
+    print(f"插入排序: {InsertionSort(arr.copy())}")
+
+    # 测试快速排序
+    print(f"快速排序: {QuickSort(arr.copy())}")
+
+    # 测试堆排序
+    print(f"堆排序: {HeapSort(arr.copy())}")
+
+    # 测试归并排序
+    print(f"归并排序: {MergeSort(arr.copy())}")
+
+    # 测试桶排序
+    print(f"桶排序: {BucketSort(arr.copy(), 5)}")
+
+    # 测试基数排序
+    print(f"基数排序: {RadixSort(arr.copy())}")
