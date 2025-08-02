@@ -255,7 +255,7 @@ def BucketSort(arr: List[int], bucket_size: int) -> List[int]:
     if not arr or bucket_size <= 0:
         return arr[:]  # 空输入或非法桶数，直接返回拷贝
 
-        # 1. 求数组长度、最小值、最大值
+    # 1. 求数组长度、最小值、最大值
     n = 0
     min_val = max_val = None
     for num in arr:
