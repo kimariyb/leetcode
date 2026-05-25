@@ -27,6 +27,10 @@ class Solution:
             
             # 遍历数组，从 start 开始
             for i in range(start, len(nums)):
+                # 排除重复元素
+                if i > start and nums[i] == nums[i - 1]:
+                    continue
+                
                 # 将当前元素添加到当前子集中
                 curr_set.append(nums[i])
                 # 递归调用 backtrack，从下一个元素开始
@@ -39,5 +43,5 @@ class Solution:
         
     
 if __name__ == '__main__':
-    nums = [1, 2, 3]
+    nums = [1, 2, 2]
     print(Solution().subsets(nums))
